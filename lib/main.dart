@@ -21,21 +21,39 @@ class _MyAppSate extends State<MyApp> {
   final _questions = const [
     {
       "questionText": "what's your favouriate color?",
-      "answers": ["Black", "Red", "Blue", "White"],
+      "answers": [
+        {"text": "Black", "score": 10},
+        {"text": "Red", "score": 20},
+        {"text": "Blue", "score": 30},
+        {"text": "White", "score": 40},
+      ],
     },
     {
       "questionText": "what's your favourite animal",
-      "answers": ["rabbit", "snake", "dog", "cat"],
+      "answers": [
+        {"text": "rabbit", "score": 10},
+        {"text": "snake", "score": 20},
+        {"text": "dog", "score": 30},
+        {"text": "cat", "score": 40},
+      ],
     },
     {
       "questionText": "who is your favourite Instructor",
-      "answers": ["Max", "Tim", "Kieren", "Kieren"]
+      "answers": [
+        {"text": "Max", "score": 10},
+        {"text": "Tim", "score": 20},
+        {"text": "Kieren", "score": 30},
+        {"text": "Kieren", "score": 40},
+      ],
     },
   ];
 
   var _questionIndex = 0;
+  var _totalScore = 0;
 
-  void _answerQuestion() {
+  void _answerQuestion(int score) {
+    _totalScore += score;
+
     setState(() {
       _questionIndex++;
     });
@@ -43,6 +61,13 @@ class _MyAppSate extends State<MyApp> {
     if (_questionIndex < _questions.length) {
       print("there are no more questions");
     }
+  }
+
+  void _resetQuiz() {
+    setState(() {
+      _questionIndex = 0;
+      _totalScore = 0;
+    });
   }
 
   @override
@@ -57,7 +82,7 @@ class _MyAppSate extends State<MyApp> {
                 answerQuestion: _answerQuestion,
                 questionIndex: _questionIndex,
                 questions: _questions)
-            : Result(),
+            : Result(_totalScore, _resetQuiz),
       ),
     );
 
